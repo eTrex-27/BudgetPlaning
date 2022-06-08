@@ -6,9 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="900" Height="450">
 
-    <Grid>
+    <Grid HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <NavigationView x:Name="NavigationViewControl" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" IsPaneToggleButtonVisible="False" PaneDisplayMode="Left">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Счет" HorizontalAlignment="Left" Width="200"  />
+                <NavigationViewItem Content="Новая операция" HorizontalAlignment="Left" Width="200"  />
+                <NavigationViewItem Content="История" HorizontalAlignment="Left" Width="200" />
+            </NavigationView.MenuItems>
+        </NavigationView>
 
     </Grid>
 </Page>
