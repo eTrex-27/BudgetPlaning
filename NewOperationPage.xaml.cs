@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetPlaning.Controllers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -80,6 +81,17 @@ namespace BudgetPlaning
         {
             var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
             NavigationViewControl_Navigate(item as NavigationViewItem);
+        }
+
+        private void WriteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
+            var summ = "$" + SumOperationField.Text;
+            var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
+            var category = CategoryField.SelectedValue != null ? CategoryField.SelectedValue.ToString() : "";
+            var comment = CommentField.Text;
+
+            Connection.AddRecord(date, summ, type, category, comment);
         }
     }
 }
