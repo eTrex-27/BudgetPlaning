@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,30 +22,41 @@ namespace BudgetPlaning
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class NewOperationPage : Page
     {
-        public MainPage()
+        public NewOperationPage()
         {
             this.InitializeComponent();
 
-            this.Balance.Text = "Баланс:";
-            this.BalanceSum.Text = "$123 000";
+            this.SumOperation.Text = "Сумма операции:";
+            this.TypeOperation.Text = "Тип операции:";
 
-            var t = ApplicationView.GetForCurrentView().TitleBar;
-            t.BackgroundColor = Colors.LightGray;
-            t.ForegroundColor = Colors.White;
-            t.ButtonBackgroundColor = Colors.LightGray;
-            t.ButtonForegroundColor = Colors.White;
+            var itemsTypesOperation = new List<string>()
+            {
+                "Доход",
+                "Расход"
+            };
+
+            this.TypeOperationField.ItemsSource = itemsTypesOperation;
+            this.TypeOperationField.SelectedIndex = 0;
+
+            this.Category.Text = "Категория:";
+
+            this.Comment.Text = "Комментарий:";
+
+            this.ClearButton.Content = "Сбросить";
+            this.WriteButton.Content = "Записать";
 
             foreach (NavigationViewItemBase item in NavigationViewControl.MenuItems)
             {
-                if (item is NavigationViewItem && item.Tag.ToString() == "Invoice")
+                if (item is NavigationViewItem && item.Tag.ToString() == "NewOperation")
                 {
                     NavigationViewControl.SelectedItem = item;
                     break;
                 }
             }
         }
+
 
         private void NavigationViewControl_Navigate(NavigationViewItem item)
         {
