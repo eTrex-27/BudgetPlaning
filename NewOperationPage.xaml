@@ -54,7 +54,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" x:Name="ClearButton" HorizontalAlignment="Stretch" Margin="0,30,30,30" Height="50" CornerRadius="5" Background="#33B3B1B1"/>
-                    <Button Grid.Column="1" x:Name="WriteButton" HorizontalAlignment="Stretch" Margin="30,30,0,30" Height="50" CornerRadius="5" Background="#FF4B84E0"/>
+                    <Button Grid.Column="1" x:Name="WriteButton" HorizontalAlignment="Stretch" Margin="30,30,0,30" Height="50" CornerRadius="5" Background="#FF4B84E0" Click="WriteButton_Click"/>
                 </Grid>
                 <StackPanel>
                     <TextBlock x:Name="InfoMessage" HorizontalAlignment="Center" VerticalAlignment="Center"/>

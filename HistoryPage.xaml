@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="LightGray" Width="900" Height="450">
+    Background="LightGray" Width="900" Height="450" Loaded="Page_Loaded">
 
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Red" />
@@ -28,8 +28,11 @@
         </NavigationView>
         <Grid Grid.Column="1" Background="White" CornerRadius="15,0,0,0">
             <StackPanel Margin="20,20,0,0">
-                <controls:DataGrid x:Name="dataGrid">
-
+                <controls:DataGrid x:Name="dataGrid" 
+                    Margin="12" 
+                    AutoGenerateColumns="True" GridLinesVisibility="All"
+                    HeadersVisibility="Column" CanUserReorderColumns="False"
+                    HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black" AutoGeneratingColumn="dataGrid_AutoGeneratingColumn" HorizontalAlignment="Stretch" ColumnWidth="2*">
                 </controls:DataGrid>
             </StackPanel>
         </Grid>
