@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetPlaning.Controllers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace BudgetPlaning
             this.InitializeComponent();
 
             this.Balance.Text = "Баланс:";
-            this.BalanceSum.Text = "$123 000";
+            this.BalanceSum.Text = $"${Connection.GetBalance()}";
 
             var t = ApplicationView.GetForCurrentView().TitleBar;
             t.BackgroundColor = Colors.LightGray;

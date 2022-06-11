@@ -131,6 +131,10 @@
     <Compile Include="HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\CategoriesExpense.cs" />
+    <Compile Include="Models\CategoriesIncome.cs" />
+    <Compile Include="Models\OperationTypes.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="NewOperationPage.xaml.cs">
       <DependentUpon>NewOperationPage.xaml</DependentUpon>
