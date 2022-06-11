@@ -61,7 +61,7 @@ namespace BudgetPlaning.Controllers
                     {
                         while (reader.Read())
                         {
-                            records.Add(new Record(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString()));
+                            records.Add(new Record(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), !string.IsNullOrEmpty(reader[4].ToString()) ? reader[4].ToString() : "--"));
                         }
                     }
                 }
@@ -93,6 +93,58 @@ namespace BudgetPlaning.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public static double GetBalance()
+        {
+            var balance = 0.00;
+
+            try
+            {
+                balance = GetSumm("Доход") - GetSumm("Расход");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return balance;
+        }
+
+        private static double GetSumm(string Type)
+        {
+            var summ = 0.00;
+
+            try
+            {
+                var connection = ConnectToDB();
+
+                connection.Open();
+
+                var query = $"SELECT Summ, Type FROM Information WHERE Type = '{Type}'";
+
+                using (SqliteCommand command = new SqliteCommand(query, connection))
+                {
+                    var reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            if (double.TryParse(reader[0].ToString().Replace("$", ""), out var value))
+                            {
+                                summ += value;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return summ;
         }
     }
 }

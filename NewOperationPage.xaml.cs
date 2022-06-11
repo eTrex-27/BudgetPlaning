@@ -1,4 +1,5 @@
 ﻿using BudgetPlaning.Controllers;
+using BudgetPlaning.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,11 +33,7 @@ namespace BudgetPlaning
             this.SumOperation.Text = "Сумма операции:";
             this.TypeOperation.Text = "Тип операции:";
 
-            var itemsTypesOperation = new List<string>()
-            {
-                "Доход",
-                "Расход"
-            };
+            var itemsTypesOperation = OperationTypes.GetTypes();
 
             this.TypeOperationField.ItemsSource = itemsTypesOperation;
             this.TypeOperationField.SelectedIndex = 0;
@@ -85,6 +82,8 @@ namespace BudgetPlaning
 
         private void WriteButton_Click(object sender, RoutedEventArgs e)
         {
+            // Проверить на валидацию и пустоту
+
             var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
             var summ = "$" + SumOperationField.Text;
             var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
@@ -92,6 +91,16 @@ namespace BudgetPlaning
             var comment = CommentField.Text;
 
             Connection.AddRecord(date, summ, type, category, comment);
+        }
+
+        private void TypeOperationField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (TypeOperationField.SelectedValue.ToString())
+            {
+                case "Доход": CategoryField.ItemsSource = new CategoriesIncome().GetCategories(); CategoryField.SelectedIndex = 0; break;
+                case "Расход": CategoryField.ItemsSource = new CategoriesExpense().GetCategories(); CategoryField.SelectedIndex = 0; break;
+                default: break;
+            }
         }
     }
 }
