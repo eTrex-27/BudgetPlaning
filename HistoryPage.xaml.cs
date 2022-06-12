@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlaning.View;
+using BudgetPlaning.Controllers;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -28,6 +29,8 @@ namespace BudgetPlaning
         public HistoryPage()
         {
             this.InitializeComponent();
+
+            ClearHistoryButton.Content = "Очистить историю";
 
             foreach (NavigationViewItemBase item in NavigationViewControl.MenuItems)
             {
@@ -70,7 +73,6 @@ namespace BudgetPlaning
 
         private void dataGrid_AutoGeneratingColumn(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridAutoGeneratingColumnEventArgs e)
         {
-            e.Column.IsReadOnly = true;
             switch(e.Column.Header.ToString())
             {
                 case "Date": e.Column.Header = "Дата"; break;
@@ -80,6 +82,18 @@ namespace BudgetPlaning
                 case "Comment": e.Column.Header = "Комментарий"; break;
                 default: break;
             }
+        }
+
+        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Connection.CleareRecords();
+            dataGrid.ItemsSource = ViewGridData.GetRecords();
+        }
+
+        private void dataGrid_CellEditEnded(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridCellEditEndedEventArgs e)
+        {
+            var row = e.Row.GetIndex();
+            var column = e.Column.DisplayIndex;
         }
     }
 }

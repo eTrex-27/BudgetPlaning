@@ -82,15 +82,30 @@ namespace BudgetPlaning
 
         private void WriteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверить на валидацию и пустоту
-
             var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
-            var summ = "$" + SumOperationField.Text;
+            var summ = SumOperationField.Text;
             var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
             var category = CategoryField.SelectedValue != null ? CategoryField.SelectedValue.ToString() : "";
             var comment = CommentField.Text;
 
-            Connection.AddRecord(date, summ, type, category, comment);
+            var validate = Validation.ValidateSumField(SumOperationField.Text);
+
+            if (validate.Item1 && Connection.ParseDouble(SumOperationField.Text) != 0.00)
+            {
+                HintError.Text = "";
+                SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(66, 00, 00, 00));
+                Connection.AddRecord(date, summ, type, category, comment);
+            }
+            else if (string.IsNullOrEmpty(SumOperationField.Text))
+            {
+                HintError.Text = "Поле обязательно для заполнения";
+                SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            }
+            else
+            {
+                HintError.Text = "Сумма имеет неправильный формат";
+                SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            }
         }
 
         private void TypeOperationField_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,6 +116,32 @@ namespace BudgetPlaning
                 case "Расход": CategoryField.ItemsSource = new CategoriesExpense().GetCategories(); CategoryField.SelectedIndex = 0; break;
                 default: break;
             }
+        }
+
+        private void SumOperationField_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            if (args.IsContentChanging)
+            {
+                var validate = Validation.ValidateSumField(sender.Text);
+                if (!validate.Item1)
+                {
+                    HintError.Text = validate.Item2;
+                    sender.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                }
+                else
+                {
+                    HintError.Text = "";
+                    sender.BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(66, 00, 00, 00));
+                }
+            }
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            SumOperationField.Text = "";
+            CommentField.Text = "";
+            CategoryField.SelectedIndex = 0;
+            TypeOperationField.SelectedIndex = 0;
         }
     }
 }

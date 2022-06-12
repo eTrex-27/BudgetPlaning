@@ -1,6 +1,7 @@
 ﻿using BudgetPlaning.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,7 +32,7 @@ namespace BudgetPlaning
             this.InitializeComponent();
 
             this.Balance.Text = "Баланс:";
-            this.BalanceSum.Text = $"${Connection.GetBalance()}";
+            this.BalanceSum.Text = $"{Controllers.Balance.GetBalance().ToString("C", CultureInfo.GetCultureInfo("en-US"))}";
 
             var t = ApplicationView.GetForCurrentView().TitleBar;
             t.BackgroundColor = Colors.LightGray;
