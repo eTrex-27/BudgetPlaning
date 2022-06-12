@@ -22,5 +22,18 @@ namespace BudgetPlaning.Models
             this.Category = Category;
             this.Comment = Comment;
         }
+
+        public string GetValueOfField(string columnName)
+        {
+            switch (columnName)
+            {
+                case "Date": return Date;
+                case "Summ": return Summ;
+                case "Type": return Type;
+                case "Category": return Category;
+                case "Comment": return Comment;
+                default:  return "";
+            }
+        }
     }
 }
