@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,7 +33,8 @@ namespace BudgetPlaning
             this.InitializeComponent();
 
             this.Balance.Text = "Баланс:";
-            this.BalanceSum.Text = $"{Controllers.Balance.GetBalance().ToString("C", CultureInfo.GetCultureInfo("en-US"))}";
+
+            ShowBalance();
 
             var t = ApplicationView.GetForCurrentView().TitleBar;
             t.BackgroundColor = Colors.LightGray;
@@ -47,6 +49,23 @@ namespace BudgetPlaning
                     NavigationViewControl.SelectedItem = item;
                     break;
                 }
+            }
+        }
+
+        private async void ShowBalance()
+        {
+            try
+            {
+                var balance = Controllers.Balance.GetBalance();
+                if (balance >= 0)
+                    this.BalanceSum.Text = $"{Controllers.Balance.GetBalance().ToString("C", CultureInfo.GetCultureInfo("en-US"))}";
+                else
+                    this.BalanceSum.Text = $"{Controllers.Balance.GetBalance().ToString("C", CultureInfo.GetCultureInfo("en-US")).Replace("(", "").Replace(")", "").Insert(0, "-")}";
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
             }
         }
 

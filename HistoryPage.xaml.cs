@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlaning.View;
 using BudgetPlaning.Controllers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using BudgetPlaning.Models;
+using Windows.UI.Popups;
+using System.Threading.Tasks;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -90,10 +94,37 @@ namespace BudgetPlaning
             dataGrid.ItemsSource = ViewGridData.GetRecords();
         }
 
-        private void dataGrid_CellEditEnded(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridCellEditEndedEventArgs e)
+        private void dataGrid_CellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
         {
             var row = e.Row.GetIndex();
-            var column = e.Column.DisplayIndex;
+            var column = "";
+
+            switch (e.Column.Header.ToString())
+            {
+                case "Дата": column = "Date" ; break;
+                case "Сумма": column = "Summ"; break;
+                case "Тип": column = "Type"; break;
+                case "Категория": column = "Category"; break;
+                case "Комментарий": column = "Comment"; break;
+                default: break;
+            }
+
+            UpdateRecord(row, column, ((sender as DataGrid).SelectedItem as Record).GetValueOfField(column));
+
+            dataGrid.ItemsSource = ViewGridData.GetRecords();
+        }
+
+        private async void UpdateRecord(int row, string column, string value)
+        {
+            try
+            {
+                UpdateRecords.Update(row, column, value);
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
+            }
         }
     }
 }
