@@ -2,6 +2,7 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace BudgetPlaning.Controllers
         {
             try
             {
-                var queryIfNotExist = "CREATE TABLE IF NOT EXISTS Information(Date TEXT NOT NULL, Summ TEXT NOT NULL, Type TEXT NOT NULL, Category TEXT NOT NULL, Comment TEXT)";
+                var queryIfNotExist = "CREATE TABLE IF NOT EXISTS Information(ID INTEGER PRIMARY KEY, Date TEXT NOT NULL, Summ TEXT NOT NULL, Type TEXT NOT NULL, Category TEXT NOT NULL, Comment TEXT)";
 
                 using (SqliteCommand command = new SqliteCommand(queryIfNotExist, connection))
                 {
@@ -61,7 +62,9 @@ namespace BudgetPlaning.Controllers
                     {
                         while (reader.Read())
                         {
-                            records.Add(new Record(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), !string.IsNullOrEmpty(reader[4].ToString()) ? reader[4].ToString() : "--"));
+                            var number = ParseDouble(reader[1].ToString());
+
+                            records.Add(new Record(reader[0].ToString(), number.ToString("C", CultureInfo.GetCultureInfo("en-US")), reader[2].ToString(), reader[3].ToString(), !string.IsNullOrEmpty(reader[4].ToString()) ? reader[4].ToString() : "--"));
                         }
                     }
                 }
@@ -72,6 +75,15 @@ namespace BudgetPlaning.Controllers
             }
 
             return records;
+        }
+
+        public static double ParseDouble(string value)
+        {
+            var number = 0.00;
+
+            if (double.TryParse(value, out number) || double.TryParse(value.Replace(".", ","), out number) || double.TryParse(value.Replace(",", "."), out number))
+                return number;
+            else throw new Exception("Сумма имеет неправильный формат");
         }
 
         public static void AddRecord(string date, string summ, string type, string category, string comment)
@@ -88,6 +100,8 @@ namespace BudgetPlaning.Controllers
                 {
                     command.ExecuteNonQuery();
                 }
+
+                connection.Close();
             }
             catch (Exception ex)
             {
@@ -95,56 +109,27 @@ namespace BudgetPlaning.Controllers
             }
         }
 
-        public static double GetBalance()
+        public static void CleareRecords()
         {
-            var balance = 0.00;
-
-            try
-            {
-                balance = GetSumm("Доход") - GetSumm("Расход");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-            return balance;
-        }
-
-        private static double GetSumm(string Type)
-        {
-            var summ = 0.00;
-
             try
             {
                 var connection = ConnectToDB();
 
                 connection.Open();
 
-                var query = $"SELECT Summ, Type FROM Information WHERE Type = '{Type}'";
+                var query = "DELETE FROM Information";
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
-                    var reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            if (double.TryParse(reader[0].ToString().Replace("$", ""), out var value))
-                            {
-                                summ += value;
-                            }
-                        }
-                    }
+                    command.ExecuteNonQuery();
                 }
+
+                connection.Close();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
-            return summ;
         }
     }
 }

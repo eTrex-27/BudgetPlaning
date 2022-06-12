@@ -27,14 +27,17 @@
             </NavigationView.MenuItems>
         </NavigationView>
         <Grid Grid.Column="1" Background="White" CornerRadius="15,0,0,0">
-            <StackPanel Margin="20,20,0,0">
-                <controls:DataGrid x:Name="dataGrid" 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <controls:DataGrid Grid.Column="1" Grid.Row="0" x:Name="dataGrid" 
                     Margin="12" 
                     AutoGenerateColumns="True" GridLinesVisibility="All"
-                    HeadersVisibility="Column" CanUserReorderColumns="False"
-                    HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black" AutoGeneratingColumn="dataGrid_AutoGeneratingColumn" HorizontalAlignment="Stretch" ColumnWidth="2*">
-                </controls:DataGrid>
-            </StackPanel>
+                    HeadersVisibility="Column" CanUserReorderColumns="False" 
+                    HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black" AutoGeneratingColumn="dataGrid_AutoGeneratingColumn" HorizontalAlignment="Stretch" ColumnWidth="2*" VerticalScrollBarVisibility="Auto" CellEditEnded="dataGrid_CellEditEnded">
+            </controls:DataGrid>
+            <Button Grid.Row="1" x:Name="ClearHistoryButton" HorizontalAlignment="Center" Margin="10,10,0,10" Height="50" Width="200" CornerRadius="5" Background="#FFEDEDED" Click="ClearHistoryButton_Click"/>
         </Grid>
     </Grid>
 </Page>

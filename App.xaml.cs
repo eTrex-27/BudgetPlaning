@@ -49,6 +49,8 @@ namespace BudgetPlaning
                 // Создание фрейма, который станет контекстом навигации, и переход к первой странице
                 rootFrame = new Frame();
 
+                rootFrame.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
+
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

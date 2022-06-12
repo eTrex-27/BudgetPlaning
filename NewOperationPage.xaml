@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="LightGray" Width="900" Height="450">
+    Width="900" Height="450">
     <Page.Resources>
         <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Red" />
         <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="LightGray" />
@@ -25,6 +25,9 @@
             </NavigationView.MenuItems>
         </NavigationView>
         <Grid Grid.Column="1" Background="White" CornerRadius="15,0,0,0">
+            <FlyoutBase.AttachedFlyout>
+                <TimePickerFlyout/>
+            </FlyoutBase.AttachedFlyout>
             <StackPanel Margin="50,50,50,50">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -33,14 +36,15 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <TextBlock x:Name="SumOperation" FontFamily="Arial" FontSize="14" HorizontalAlignment="Left"/>
-                        <TextBox x:Name="SumOperationField" Width="200" HorizontalAlignment="Left" Margin="0,5,0,0" CornerRadius="5"/>
+                        <TextBox x:Name="SumOperationField" Width="200" HorizontalAlignment="Left" Margin="0,5,0,0" CornerRadius="5" TextChanging="SumOperationField_TextChanging"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <TextBlock x:Name="TypeOperation" FontFamily="Arial" FontSize="14" HorizontalAlignment="Left"/>
                         <ComboBox x:Name="TypeOperationField" HorizontalAlignment="Stretch" Margin="0,5,0,0" CornerRadius="5" SelectionChanged="TypeOperationField_SelectionChanged"/>
                     </StackPanel>
                 </Grid>
-                <StackPanel Margin="0,50,0,0">
+                <TextBlock x:Name="HintError" FontFamily="Arial" FontSize="14" HorizontalAlignment="Left" Foreground="#FFDE1111" Margin="0,14,0,0" Width="Auto" Height="14"/>
+                <StackPanel Margin="0,30,0,0">
                     <TextBlock x:Name="Category" FontFamily="Arial" FontSize="14" HorizontalAlignment="Left"/>
                     <ComboBox x:Name="CategoryField" HorizontalAlignment="Stretch" Margin="0,5,0,0" CornerRadius="5"/>
                 </StackPanel>
@@ -53,7 +57,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="ClearButton" HorizontalAlignment="Stretch" Margin="0,30,30,30" Height="50" CornerRadius="5" Background="#33B3B1B1"/>
+                    <Button Grid.Column="0" x:Name="ClearButton" HorizontalAlignment="Stretch" Margin="0,30,30,30" Height="50" CornerRadius="5" Background="#33B3B1B1" Click="ClearButton_Click"/>
                     <Button Grid.Column="1" x:Name="WriteButton" HorizontalAlignment="Stretch" Margin="30,30,0,30" Height="50" CornerRadius="5" Background="#FF4B84E0" Click="WriteButton_Click"/>
                 </Grid>
                 <StackPanel>
