@@ -22,6 +22,7 @@
                 <NavigationViewItem Tag="Invoice" Content="Счет" HorizontalAlignment="Stretch"/>
                 <NavigationViewItem Tag="NewOperation" Content="Новая операция" HorizontalAlignment="Stretch"/>
                 <NavigationViewItem Tag="History" Content="История" HorizontalAlignment="Stretch"/>
+                <NavigationViewItem Tag="Statistics" Content="Статистика" HorizontalAlignment="Stretch"/>
             </NavigationView.MenuItems>
         </NavigationView>
         <Grid Grid.Column="1" Background="White" CornerRadius="15,0,0,0">

@@ -19,7 +19,7 @@ namespace BudgetPlaning.Controllers
 
                 connection.Open();
 
-                if (columnName.Equals("Summ")) value = value.Replace("$", "").Replace(".00", "");
+                if (columnName.Equals("Summ")) value = value.Replace("$", "").Replace(".00", "").Replace(".", "").Replace(",", "");
 
                 switch (columnName)
                 {
@@ -32,6 +32,8 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
+                    command.CommandTimeout = 10;
+
                     command.ExecuteNonQuery();
                 }
 

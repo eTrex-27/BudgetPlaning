@@ -17,11 +17,26 @@ namespace BudgetPlaning.Controllers
         {
             try
             {
+                InitializeDatbase();
+
                 string dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Database.db");
-                using (var connection = new SqliteConnection($"Data Source={dbPath};Mode=ReadWriteCreate;"))
+
+                using (var connection = new SqliteConnection($"Filename={dbPath};Mode=ReadWriteCreate;"))
                 {
                     return connection;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private async static void InitializeDatbase()
+        {
+            try
+            {
+                await ApplicationData.Current.LocalFolder.CreateFileAsync("Database.db", CreationCollisionOption.OpenIfExists);
             }
             catch (Exception ex)
             {
@@ -37,6 +52,8 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(queryIfNotExist, connection))
                 {
+                    command.CommandTimeout = 10;
+
                     command.ExecuteNonQuery();
                 }
             }
@@ -56,6 +73,8 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
+                    command.CommandTimeout = 10;
+
                     var reader = command.ExecuteReader();
 
                     if (reader.HasRows)
@@ -98,14 +117,15 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
+                    command.CommandTimeout = 10;
                     command.ExecuteNonQuery();
                 }
 
                 connection.Close();
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Не удалось добавить операцию, проверьте заполненные данные");
             }
         }
 
@@ -121,14 +141,15 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
+                    command.CommandTimeout = 10;
                     command.ExecuteNonQuery();
                 }
 
                 connection.Close();
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Не удалось очистить историю");
             }
         }
     }

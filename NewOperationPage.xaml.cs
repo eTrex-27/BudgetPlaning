@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -80,31 +81,41 @@ namespace BudgetPlaning
             NavigationViewControl_Navigate(item as NavigationViewItem);
         }
 
-        private void WriteButton_Click(object sender, RoutedEventArgs e)
+        private async void WriteButton_Click(object sender, RoutedEventArgs e)
         {
-            var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
-            var summ = SumOperationField.Text;
-            var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
-            var category = CategoryField.SelectedValue != null ? CategoryField.SelectedValue.ToString() : "";
-            var comment = CommentField.Text;
-
-            var validate = Validation.ValidateSumField(SumOperationField.Text);
-
-            if (validate.Item1 && Connection.ParseDouble(SumOperationField.Text) != 0.00)
+            try
             {
-                HintError.Text = "";
-                SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(66, 00, 00, 00));
-                Connection.AddRecord(date, summ, type, category, comment);
+                var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
+                var summ = SumOperationField.Text;
+                var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
+                var category = CategoryField.SelectedValue != null ? CategoryField.SelectedValue.ToString() : "";
+                var comment = CommentField.Text;
+
+                var validate = Validation.ValidateSumField(SumOperationField.Text);
+
+                if (validate.Item1 && Connection.ParseDouble(SumOperationField.Text) != 0.00)
+                {
+                    HintError.Text = "";
+                    SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(66, 00, 00, 00));
+                    Connection.AddRecord(date, summ, type, category, comment);
+                }
+                else if (string.IsNullOrEmpty(SumOperationField.Text))
+                {
+                    HintError.Text = "Поле обязательно для заполнения";
+                    SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                }
+                else
+                {
+                    HintError.Text = "Сумма имеет неправильный формат";
+                    SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                }
             }
-            else if (string.IsNullOrEmpty(SumOperationField.Text))
-            {
-                HintError.Text = "Поле обязательно для заполнения";
-                SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
-            }
-            else
+            catch (Exception ex)
             {
                 HintError.Text = "Сумма имеет неправильный формат";
                 SumOperationField.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
             }
         }
 
