@@ -70,9 +70,17 @@ namespace BudgetPlaning
             NavigationViewControl_Navigate(item as NavigationViewItem);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = ViewGridData.GetRecords();
+            try
+            {
+                dataGrid.ItemsSource = ViewGridData.GetRecords();
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
+            }
         }
 
         private void dataGrid_AutoGeneratingColumn(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridAutoGeneratingColumnEventArgs e)
@@ -88,13 +96,21 @@ namespace BudgetPlaning
             }
         }
 
-        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
+        private async void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            Connection.CleareRecords();
-            dataGrid.ItemsSource = ViewGridData.GetRecords();
+            try
+            {
+                Connection.CleareRecords();
+                dataGrid.ItemsSource = ViewGridData.GetRecords();
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
+            }
         }
 
-        private void dataGrid_CellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
+        private async void dataGrid_CellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
         {
             var row = e.Row.GetIndex();
             var column = "";
@@ -109,16 +125,20 @@ namespace BudgetPlaning
                 default: break;
             }
 
-            UpdateRecord(row, column, ((sender as DataGrid).SelectedItem as Record).GetValueOfField(column));
 
-            dataGrid.ItemsSource = ViewGridData.GetRecords();
-        }
-
-        private async void UpdateRecord(int row, string column, string value)
-        {
             try
             {
-                UpdateRecords.Update(row, column, value);
+                UpdateRecords.Update(row, column, ((sender as DataGrid).SelectedItem as Record).GetValueOfField(column));
+            }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(ex.Message);
+                await dialog.ShowAsync();
+            }
+
+            try
+            {
+                dataGrid.ItemsSource = ViewGridData.GetRecords();
             }
             catch (Exception ex)
             {

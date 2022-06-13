@@ -47,6 +47,8 @@ namespace BudgetPlaning.Controllers
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
                 {
+                    command.CommandTimeout = 10;
+
                     var reader = command.ExecuteReader();
 
                     if (reader.HasRows)
