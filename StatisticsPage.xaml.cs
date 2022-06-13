@@ -28,17 +28,22 @@ namespace BudgetPlaning
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class HistoryPage : Page
+    public sealed partial class StatisticsPage : Page
     {
-        public HistoryPage()
+        public StatisticsPage()
         {
             this.InitializeComponent();
 
-            ClearHistoryButton.Content = "Очистить историю";
+            Income1.Text = "Доход:";
+            Income2.Text = "Доход:";
+            Income3.Text = "Доход:";
+            Expense1.Text = "Расход:";
+            Expense2.Text = "Расход:";
+            Expense3.Text = "Расход:";
 
             foreach (NavigationViewItemBase item in NavigationViewControl.MenuItems)
             {
-                if (item is NavigationViewItem && item.Tag.ToString() == "History")
+                if (item is NavigationViewItem && item.Tag.ToString() == "Statistics")
                 {
                     NavigationViewControl.SelectedItem = item;
                     break;
@@ -73,75 +78,23 @@ namespace BudgetPlaning
             NavigationViewControl_Navigate(item as NavigationViewItem);
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void TabBar_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
         {
             try
             {
-                dataGrid.ItemsSource = ViewGridData.GetRecords();
-            }
-            catch (Exception ex)
-            {
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
-            }
-        }
-
-        private void dataGrid_AutoGeneratingColumn(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridAutoGeneratingColumnEventArgs e)
-        {
-            switch(e.Column.Header.ToString())
-            {
-                case "Date": e.Column.Header = "Дата"; break;
-                case "Summ": e.Column.Header = "Сумма"; break;
-                case "Type": e.Column.Header = "Тип"; break;
-                case "Category": e.Column.Header = "Категория"; break;
-                case "Comment": e.Column.Header = "Комментарий"; break;
-                default: break;
-            }
-        }
-
-        private async void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Connection.CleareRecords();
-                dataGrid.ItemsSource = ViewGridData.GetRecords();
-            }
-            catch (Exception ex)
-            {
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
-            }
-        }
-
-        private async void dataGrid_CellEditEnded(object sender, DataGridCellEditEndedEventArgs e)
-        {
-            var row = e.Row.GetIndex();
-            var column = "";
-
-            switch (e.Column.Header.ToString())
-            {
-                case "Дата": column = "Date" ; break;
-                case "Сумма": column = "Summ"; break;
-                case "Тип": column = "Type"; break;
-                case "Категория": column = "Category"; break;
-                case "Комментарий": column = "Comment"; break;
-                default: break;
-            }
-
-
-            try
-            {
-                UpdateRecords.Update(row, column, ((sender as DataGrid).SelectedItem as Record).GetValueOfField(column));
-            }
-            catch (Exception ex)
-            {
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
-            }
-
-            try
-            {
-                dataGrid.ItemsSource = ViewGridData.GetRecords();
+                switch ((sender.SelectedItem as PivotItem).Name)
+                {
+                    case "Week":
+                        IncomeSum1.Text = Statistics.GetStatistics("Week").Item1;
+                        ExpenseSum1.Text = Statistics.GetStatistics("Week").Item2; break;
+                    case "Month":
+                        IncomeSum2.Text = Statistics.GetStatistics("Month").Item1;
+                        ExpenseSum2.Text = Statistics.GetStatistics("Month").Item2; break;
+                    case "Year":
+                        IncomeSum3.Text = Statistics.GetStatistics("Year").Item1;
+                        ExpenseSum3.Text = Statistics.GetStatistics("Year").Item2; break;
+                    default: break;
+                }
             }
             catch (Exception ex)
             {

@@ -129,8 +129,12 @@
     </Compile>
     <Compile Include="Controllers\Balance.cs" />
     <Compile Include="Controllers\Connection.cs" />
+    <Compile Include="Controllers\Statistics.cs" />
     <Compile Include="Controllers\UpdateRecords.cs" />
     <Compile Include="Controllers\Validation.cs" />
+    <Compile Include="StatisticsPage.xaml.cs">
+      <DependentUpon>StatisticsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
     </Compile>
@@ -168,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="StatisticsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="HistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

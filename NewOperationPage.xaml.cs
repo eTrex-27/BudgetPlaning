@@ -72,6 +72,9 @@ namespace BudgetPlaning
                 case "History":
                     Frame.Navigate(typeof(HistoryPage), null, new SuppressNavigationTransitionInfo());
                     break;
+                case "Statistics":
+                    Frame.Navigate(typeof(StatisticsPage), null, new SuppressNavigationTransitionInfo());
+                    break;
             }
         }
 
@@ -85,7 +88,7 @@ namespace BudgetPlaning
         {
             try
             {
-                var date = DateTime.Now.ToString("dd.MM.yyyy, HH:mm");
+                var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var summ = SumOperationField.Text;
                 var type = TypeOperationField.SelectedValue != null ? TypeOperationField.SelectedValue.ToString() : "";
                 var category = CategoryField.SelectedValue != null ? CategoryField.SelectedValue.ToString() : "";
