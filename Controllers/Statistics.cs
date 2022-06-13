@@ -47,9 +47,9 @@ namespace BudgetPlaning.Controllers
 
                 switch (filter)
                 {
-                    case "Week": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date >= Date('now', '-6 days')"; break;
-                    case "Month": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date >= Date('now', '-1 month')"; break;
-                    case "Year": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date >= Date('now', '-1 year')"; break;
+                    case "Week": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date BETWEEN Date('now', '-6 days') AND Date('now', 'localtime')"; break;
+                    case "Month": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date BETWEEN Date('now', '-1 month') AND Date('now', 'localtime')"; break;
+                    case "Year": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Расход' AND Date BETWEEN Date('now', '-1 year') AND Date('now', 'localtime')"; break;
                 }
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
@@ -87,9 +87,9 @@ namespace BudgetPlaning.Controllers
 
                 switch (filter)
                 {
-                    case "Week": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date >= Date('now', '-6 days')"; break;
-                    case "Month": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date >= Date('now', '-1 month')"; break;
-                    case "Year": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date >= Date('now', '-1 year')"; break;
+                    case "Week": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date BETWEEN Date('now', '-6 days') AND Date('now', 'localtime')"; break;
+                    case "Month": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date BETWEEN Date('now', '-1 month') AND Date('now', 'localtime')"; break;
+                    case "Year": query = "SELECT SUM(Summ) FROM Information WHERE Type = 'Доход' AND Date BETWEEN Date('now', '-1 year') AND Date('now', 'localtime')"; break;
                 }
 
                 using (SqliteCommand command = new SqliteCommand(query, connection))
