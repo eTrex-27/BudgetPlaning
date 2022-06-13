@@ -23,7 +23,7 @@ namespace BudgetPlaning.Controllers
 
                 switch (columnName)
                 {
-                    case "Date": ValdationDate(value); break;
+                    case "Date": value = ValdationDate(value); break;
                     case "Summ": ValdationSumm(value); break;
                     case "Type": ValdationType(value); break;
                 }
@@ -60,7 +60,7 @@ namespace BudgetPlaning.Controllers
             }
         }
 
-        private static void ValdationDate(string value)
+        private static string ValdationDate(string value)
         {
             try
             {
@@ -68,11 +68,17 @@ namespace BudgetPlaning.Controllers
                 {
                     throw new Exception($"Значение даты {value} некорректно, введите в формате \"день.месяц.год, часы:минуты\"");
                 }
+                else
+                {
+                    value = DateTime.Parse(value).ToString("yyyy-MM-dd HH:mm:ss");
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+
+            return value;
         }
 
         private static void ValdationSumm(string value)

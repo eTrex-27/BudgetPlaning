@@ -48,7 +48,7 @@ namespace BudgetPlaning.Controllers
         {
             try
             {
-                var queryIfNotExist = "CREATE TABLE IF NOT EXISTS Information(ID INTEGER PRIMARY KEY, Date TEXT NOT NULL, Summ TEXT NOT NULL, Type TEXT NOT NULL, Category TEXT NOT NULL, Comment TEXT)";
+                var queryIfNotExist = "CREATE TABLE IF NOT EXISTS Information(ID INTEGER PRIMARY KEY, Date DATE NOT NULL, Summ TEXT NOT NULL, Type TEXT NOT NULL, Category TEXT NOT NULL, Comment TEXT)";
 
                 using (SqliteCommand command = new SqliteCommand(queryIfNotExist, connection))
                 {
@@ -83,7 +83,7 @@ namespace BudgetPlaning.Controllers
                         {
                             var number = ParseDouble(reader[1].ToString());
 
-                            records.Add(new Record(reader[0].ToString(), number.ToString("C", CultureInfo.GetCultureInfo("en-US")), reader[2].ToString(), reader[3].ToString(), !string.IsNullOrEmpty(reader[4].ToString()) ? reader[4].ToString() : "--"));
+                            records.Add(new Record(DateTime.Parse(reader[0].ToString()).ToString("dd.MM.yyyy, HH:mm"), number.ToString("C", CultureInfo.GetCultureInfo("en-US")), reader[2].ToString(), reader[3].ToString(), !string.IsNullOrEmpty(reader[4].ToString()) ? reader[4].ToString() : "--"));
                         }
                     }
                 }

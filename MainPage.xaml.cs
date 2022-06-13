@@ -84,6 +84,9 @@ namespace BudgetPlaning
                 case "History":
                     Frame.Navigate(typeof(HistoryPage), null, new SuppressNavigationTransitionInfo());
                     break;
+                case "Statistics":
+                    Frame.Navigate(typeof(StatisticsPage), null, new SuppressNavigationTransitionInfo());
+                    break;
             }
         }
 

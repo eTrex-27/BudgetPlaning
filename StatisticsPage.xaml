@@ -1,0 +1,84 @@
+﻿<Page
+    x:Class="BudgetPlaning.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BudgetPlaning"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="LightGray" Width="900" Height="450">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Red" />
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="LightGray" />
+    </Page.Resources>
+
+    <Grid x:Name="GridNavigationView" Height="450">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <NavigationView Grid.Column="0" x:Name="NavigationViewControl" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" IsPaneToggleButtonVisible="False" PaneDisplayMode="Left" ItemInvoked="NavigationViewControl_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="Invoice" Content="Счет" HorizontalAlignment="Stretch"/>
+                <NavigationViewItem Tag="NewOperation" Content="Новая операция" HorizontalAlignment="Stretch"/>
+                <NavigationViewItem Tag="History" Content="История" HorizontalAlignment="Stretch"/>
+                <NavigationViewItem Tag="Statistics" Content="Статистика" HorizontalAlignment="Stretch"/>
+            </NavigationView.MenuItems>
+        </NavigationView>
+        <Grid Grid.Column="1" Background="White" CornerRadius="15,0,0,0">
+            <Pivot x:Name="TabBar" Title="Статистика" PivotItemLoaded="TabBar_PivotItemLoaded">
+                <PivotItem x:Name="Week" Header="За неделю">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="Income1" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="IncomeSum1" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="Expense1" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="ExpenseSum1" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="Month"  Header="За месяц">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="Income2" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="IncomeSum2" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="Expense2" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="ExpenseSum2" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="Year" Header="За год">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="Income3" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="IncomeSum3" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="Expense3" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="ExpenseSum3" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+
+        </Grid>
+    </Grid>
+</Page>
