@@ -38,10 +38,12 @@
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock x:Name="Income1" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="IncomeSum1" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Income1Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock x:Name="Expense1" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="ExpenseSum1" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Expense1Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                     </Grid>
                 </PivotItem>
@@ -54,10 +56,12 @@
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock x:Name="Income2" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="IncomeSum2" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Income2Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock x:Name="Expense2" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="ExpenseSum2" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Expense2Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                     </Grid>
                 </PivotItem>
@@ -70,10 +74,12 @@
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock x:Name="Income3" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="IncomeSum3" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Income3Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock x:Name="Expense3" FontFamily="Arial" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock x:Name="ExpenseSum3" FontFamily="Arial" FontSize="36" Margin="0,10,0,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Expense3Block" FontFamily="Arial" FontSize="14" HorizontalAlignment="Center" Foreground="Red"/>
                         </StackPanel>
                     </Grid>
                 </PivotItem>
