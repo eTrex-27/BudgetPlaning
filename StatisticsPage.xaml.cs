@@ -78,28 +78,66 @@ namespace BudgetPlaning
             NavigationViewControl_Navigate(item as NavigationViewItem);
         }
 
-        private async void TabBar_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
+        private void TabBar_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
         {
             try
             {
                 switch ((sender.SelectedItem as PivotItem).Name)
                 {
                     case "Week":
-                        IncomeSum1.Text = Statistics.GetStatistics("Week").Item1;
-                        ExpenseSum1.Text = Statistics.GetStatistics("Week").Item2; break;
+                        IncomeSum1.Text = Statistics.GetStatisticsIncome("Week"); Income1Block.Text = ""; break;
                     case "Month":
-                        IncomeSum2.Text = Statistics.GetStatistics("Month").Item1;
-                        ExpenseSum2.Text = Statistics.GetStatistics("Month").Item2; break;
+                        IncomeSum2.Text = Statistics.GetStatisticsIncome("Month"); Income2Block.Text = ""; break;
                     case "Year":
-                        IncomeSum3.Text = Statistics.GetStatistics("Year").Item1;
-                        ExpenseSum3.Text = Statistics.GetStatistics("Year").Item2; break;
+                        IncomeSum3.Text = Statistics.GetStatisticsIncome("Year"); Income3Block.Text = ""; break;
                     default: break;
                 }
             }
             catch (Exception ex)
             {
-                var dialog = new MessageDialog(ex.Message);
-                await dialog.ShowAsync();
+                switch ((sender.SelectedItem as PivotItem).Name)
+                {
+                    case "Week":
+                        Income1Block.Text = ex.Message; break;
+                    case "Month":
+                        Income2Block.Text = ex.Message; break;
+                    case "Year":
+                        Income3Block.Text = ex.Message; break;
+                    default: break;
+                }
+
+                //var dialog = new MessageDialog(ex.Message);
+                //await dialog.ShowAsync();
+            }
+
+            try
+            {
+                switch ((sender.SelectedItem as PivotItem).Name)
+                {
+                    case "Week":
+                        ExpenseSum1.Text = Statistics.GetStatisticsExpense("Week"); Expense1Block.Text = ""; break;
+                    case "Month":
+                        ExpenseSum2.Text = Statistics.GetStatisticsExpense("Month"); Expense2Block.Text = ""; break;
+                    case "Year":
+                        ExpenseSum3.Text = Statistics.GetStatisticsExpense("Year"); Expense3Block.Text = ""; break;
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                switch ((sender.SelectedItem as PivotItem).Name)
+                {
+                    case "Week":
+                        Expense1Block.Text = ex.Message; break;
+                    case "Month":
+                        Expense2Block.Text = ex.Message; break;
+                    case "Year":
+                        Expense3Block.Text = ex.Message; break;
+                    default: break;
+                }
+
+                //var dialog = new MessageDialog(ex.Message);
+                //await dialog.ShowAsync();
             }
         }
     }
